@@ -1,9 +1,11 @@
 package model
 
-import "time"
+import (
+	"time"
+)
 
 type User struct {
-	UserId      string    `gorm:"type:uuid; primaryKey; default:uuid_generate_v4()" json:"id,omitempty"`
+	UserId      string    `gorm:"type:uuid; primaryKey; default:uuid_generate_v4()" json:"user_id,omitempty"`
 	FullName    string    `json:"full_name"`
 	Email       string    `json:"email"`
 	Password    string    `json:"password,omitempty"`
@@ -12,7 +14,7 @@ type User struct {
 	Birthday    time.Time `json:"birthday,omitempty"`
 	PhoneNumber string    `json:"phone_number"`
 	CreatedAt   time.Time `json:"created_at"`
-	UpdateAt    time.Time `json:"updated_at,omitempty" `
+	UpdatedAt   time.Time `json:"updated_at,omitempty" `
 }
 
 func (User) TableName() string {
