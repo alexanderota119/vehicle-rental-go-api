@@ -1,20 +1,20 @@
-package libs
+package lib
 
 import (
 	"encoding/json"
 	"net/http"
 )
 
-type response struct {
+type Response struct {
 	Status  string      `json:"status"`
 	Code    int         `json:"code"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data"`
 }
 
-func Response(w http.ResponseWriter, code int, payload interface{}) error {
+func ResponseSuccess(w http.ResponseWriter, code int, payload interface{}) error {
 
-	var res response
+	var res Response
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
@@ -30,7 +30,7 @@ func Response(w http.ResponseWriter, code int, payload interface{}) error {
 
 func ResponseError(w http.ResponseWriter, code int, message string) error {
 
-	var res response
+	var res Response
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)

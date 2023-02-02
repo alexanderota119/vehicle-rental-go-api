@@ -1,4 +1,4 @@
-package user
+package vehicle
 
 import (
 	"encoding/json"
@@ -8,15 +8,15 @@ import (
 	"github.com/rfauzi44/vehicle-rental/lib"
 )
 
-type user_controller struct {
-	repo *user_repo
+type vehicle_controller struct {
+	repo *vehicle_repo
 }
 
-func NewController(repo *user_repo) *user_controller {
-	return &user_controller{repo}
+func NewController(repo *vehicle_repo) *vehicle_controller {
+	return &vehicle_controller{repo}
 }
 
-func (c *user_controller) GetAll(w http.ResponseWriter, r *http.Request) {
+func (c *vehicle_controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	response, err := c.repo.GetAll()
 	if err != nil {
 		lib.ResponseError(w, http.StatusInternalServerError, err.Error())
@@ -25,10 +25,10 @@ func (c *user_controller) GetAll(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (c *user_controller) Add(w http.ResponseWriter, r *http.Request) {
+func (c *vehicle_controller) Add(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 
-	var data model.User
+	var data model.Vehicle
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
 		lib.ResponseError(w, http.StatusInternalServerError, err.Error())

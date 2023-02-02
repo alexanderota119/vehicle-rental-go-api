@@ -4,6 +4,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rfauzi44/vehicle-rental/database/orm"
 	"github.com/rfauzi44/vehicle-rental/modules/v1/user"
+	"github.com/rfauzi44/vehicle-rental/modules/v1/vehicle"
 )
 
 func NewApp() (*mux.Router, error) {
@@ -15,6 +16,7 @@ func NewApp() (*mux.Router, error) {
 	}
 
 	user.NewRoute(mainRoute, db)
+	vehicle.NewRoute(mainRoute, db)
 
 	return mainRoute, nil
 
