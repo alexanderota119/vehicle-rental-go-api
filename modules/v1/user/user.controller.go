@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/rfauzi44/vehicle-rental/database/orm/model"
+	"github.com/rfauzi44/vehicle-rental/libs"
 )
 
 type user_controller struct {
@@ -16,13 +17,11 @@ func NewController(repo *user_repo) *user_controller {
 }
 
 func (c *user_controller) GetAll(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "application/json")
 	response, err := c.repo.GetAll()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		libs.ResponseError(w, http.StatusInternalServerError, err.Error())
 	}
-
-	json.NewEncoder(w).Encode(response)
+	libs.Response(w, http.StatusOK, response)
 
 }
 
