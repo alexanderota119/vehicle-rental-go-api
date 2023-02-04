@@ -6,40 +6,43 @@ import (
 )
 
 type Response struct {
-	Status  string      `json:"status"`
-	Code    int         `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
+	Code        int         `json:"-"`
+	Status      string      `json:"status"`
+	IsError     bool        `json:"isError"`
+	Data        interface{} `json:"data,omitempty"`
+	Description interface{} `json:"description,omitempty"`
 }
 
-func ResponseSuccess(w http.ResponseWriter, code int, payload interface{}) error {
+func (res *Response) Send(w http.ResponseWriter) {
+	w.Header().Set("Content-type", "application/json")
 
-	var res Response
+	if res.IsError {
+		w.WriteHeader(res.Code)
+	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-
-	res.Status = "success"
-	res.Code = code
-	res.Message = getStatus(code)
-	res.Data = payload
-
-	return json.NewEncoder(w).Encode(res)
-
+	err := json.NewEncoder(w).Encode(res)
+	if err != nil {
+		w.Write([]byte("Error When Encode respone"))
+	}
 }
 
-func ResponseError(w http.ResponseWriter, code int, message string) error {
+func NewRes(data interface{}, code int, isError bool) *Response {
 
-	var res Response
+	if isError {
+		return &Response{
+			Code:        code,
+			Status:      getStatus(code),
+			IsError:     isError,
+			Description: data,
+		}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-
-	res.Status = "error"
-	res.Code = code
-	res.Message = message
-
-	return json.NewEncoder(w).Encode(res)
+	}
+	return &Response{
+		Code:    code,
+		Status:  getStatus(code),
+		IsError: isError,
+		Data:    data,
+	}
 }
 
 func getStatus(status int) string {

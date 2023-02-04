@@ -5,11 +5,17 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/asaskevich/govalidator"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/rfauzi44/vehicle-rental/router"
 )
 
+func init() {
+	govalidator.SetFieldsRequiredByDefault(true)
+}
+
 func main() {
+
 	r, err := router.NewApp()
 	if err != nil {
 		log.Fatal(err)

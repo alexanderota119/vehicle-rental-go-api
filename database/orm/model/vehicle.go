@@ -5,7 +5,7 @@ import (
 )
 
 type Vehicle struct {
-	ID          string    `gorm:"type:uuid; primaryKey; default:uuid_generate_v4()" json:"vehicle_id,omitempty" valid:"-"`
+	VehicleID   string    `gorm:"type:uuid; primaryKey; default:uuid_generate_v4()" json:"vehicle_id,omitempty" valid:"-"`
 	Name        string    `json:"name" valid:"type(string)"`
 	Location    string    `json:"location" valid:"type(string)"`
 	Price       uint      `json:"price" valid:"type(int)"`

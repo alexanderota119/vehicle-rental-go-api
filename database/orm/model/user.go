@@ -10,9 +10,10 @@ type User struct {
 	Email       string     `json:"email" valid:"email"`
 	Password    string     `json:"password,omitempty" valid:"type(string)"`
 	Gender      string     `json:"gender" valid:"type(string)"`
-	Address     string     `json:"address,omitempty" valid:"type(string)"`
-	Birthday    *time.Time `json:"birthday,omitempty"`
+	Address     string     `json:"address,omitempty" valid:"-"`
+	Birthday    *time.Time `json:"birthday,omitempty" valid:"-"`
 	PhoneNumber string     `json:"phone_number" valid:"type(string)"`
+	Role        int        `json:"role,omitempty" gorm:"default:1" valid:"-"`
 	CreatedAt   time.Time  `json:"created_at" valid:"-"`
 	UpdatedAt   time.Time  `json:"updated_at,omitempty" valid:"-" `
 }

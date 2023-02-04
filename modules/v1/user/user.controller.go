@@ -4,41 +4,42 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/rfauzi44/vehicle-rental/database/orm/model"
+	"github.com/rfauzi44/vehicle-rental/interfaces"
 	"github.com/rfauzi44/vehicle-rental/lib"
 )
 
 type user_controller struct {
-	repo *user_repo
+	service interfaces.UserServiceIF
 }
 
-func NewController(repo *user_repo) *user_controller {
-	return &user_controller{repo}
+func NewController(service interfaces.UserServiceIF) *user_controller {
+	return &user_controller{service}
+
 }
 
 func (c *user_controller) GetAll(w http.ResponseWriter, r *http.Request) {
-	response, err := c.repo.GetAll()
-	if err != nil {
-		lib.ResponseError(w, http.StatusInternalServerError, err.Error())
-	}
-	lib.ResponseSuccess(w, http.StatusOK, response)
-
+	result := c.service.GetAll()
+	result.Send(w)
+	return
 }
 
 func (c *user_controller) Add(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "application/json")
 
 	var data model.User
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
-		lib.ResponseError(w, http.StatusInternalServerError, err.Error())
+		lib.NewRes(err.Error(), 500, true).Send(w)
 	}
 
-	response, err := c.repo.Add(&data)
+	_, err = govalidator.ValidateStruct(data)
 	if err != nil {
-		lib.ResponseError(w, http.StatusInternalServerError, err.Error())
+		lib.NewRes(err.Error(), 500, true).Send(w)
+		return
 	}
 
-	lib.ResponseSuccess(w, http.StatusOK, response)
+	result := c.service.Add(&data)
+	result.Send(w)
 
 }

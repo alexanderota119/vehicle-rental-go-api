@@ -30,6 +30,7 @@ func (r *user_repo) Add(data *model.User) (*model.User, error) {
 	if err != nil {
 		return nil, err
 	}
+	data.Password = ""
 
 	return data, nil
 
