@@ -6,5 +6,6 @@ import (
 )
 
 type AuthServiceIF interface {
-	Login(id model.User) *lib.Response
+	Login(user *model.User) *lib.Response
+	Register(user *model.User) *lib.Response
 }

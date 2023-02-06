@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/rfauzi44/vehicle-rental/middleware"
 	"gorm.io/gorm"
 )
 
@@ -12,7 +13,7 @@ func NewRoute(rt *mux.Router, db *gorm.DB) {
 	service := NewService(repo)
 	controller := NewController(service)
 
-	route.HandleFunc("/", controller.GetAll).Methods("GET")
-	route.HandleFunc("/", controller.Add).Methods("POST")
+	route.HandleFunc("/", middleware.Handle(controller.GetById, middleware.AuthMiddleware("user"))).Methods("GET")
+	route.HandleFunc("/all", middleware.Handle(controller.GetAll, middleware.AuthMiddleware("admin"))).Methods("GET")
 
 }

@@ -13,7 +13,7 @@ type User struct {
 	Address     string     `json:"address,omitempty" valid:"-"`
 	Birthday    *time.Time `json:"birthday,omitempty" valid:"-"`
 	PhoneNumber string     `json:"phone_number" valid:"type(string)"`
-	Role        int        `json:"role,omitempty" gorm:"default:1" valid:"-"`
+	Role        string     `gorm:"default:user" json:"role,omitempty" valid:"-"`
 	CreatedAt   time.Time  `json:"created_at" valid:"-"`
 	UpdatedAt   time.Time  `json:"updated_at,omitempty" valid:"-" `
 }

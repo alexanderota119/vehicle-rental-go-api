@@ -15,7 +15,7 @@ func NewService(repo interfaces.UserRepoIF) *user_service {
 
 }
 
-func (s user_service) GetAll() *lib.Response {
+func (s *user_service) GetAll() *lib.Response {
 	data, err := s.repo.GetAll()
 	if err != nil {
 		return lib.NewRes(err.Error(), 400, true)
@@ -24,7 +24,7 @@ func (s user_service) GetAll() *lib.Response {
 
 }
 
-func (s user_service) Add(data *model.User) *lib.Response {
+func (s *user_service) Add(data *model.User) *lib.Response {
 	hashPassword, err := lib.HashPassword(data.Password)
 	if err != nil {
 		return lib.NewRes(err.Error(), 400, true)
@@ -36,4 +36,13 @@ func (s user_service) Add(data *model.User) *lib.Response {
 	}
 	return lib.NewRes(data, 200, false)
 
+}
+
+func (s *user_service) GetById(uuid string) *lib.Response {
+	data, err := s.repo.GetById(uuid)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+
+	return lib.NewRes(data, 200, false)
 }

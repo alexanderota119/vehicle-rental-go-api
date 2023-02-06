@@ -1,4 +1,4 @@
-package vehicle
+package reservation
 
 import (
 	"encoding/json"
@@ -10,18 +10,18 @@ import (
 	"github.com/rfauzi44/vehicle-rental/lib"
 )
 
-type vehicle_controller struct {
-	service interfaces.VahicleServiceIF
+type reservation_controller struct {
+	service interfaces.ReservationServiceIF
 }
 
-func NewController(service interfaces.VahicleServiceIF) *vehicle_controller {
-	return &vehicle_controller{service}
+func NewController(service interfaces.ReservationServiceIF) *reservation_controller {
+	return &reservation_controller{service}
 
 }
 
-func (c *vehicle_controller) Add(w http.ResponseWriter, r *http.Request) {
+func (c *reservation_controller) Add(w http.ResponseWriter, r *http.Request) {
 
-	var data model.Vehicle
+	var data model.Reservation
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
 		lib.NewRes(err.Error(), 500, true).Send(w)
@@ -37,9 +37,4 @@ func (c *vehicle_controller) Add(w http.ResponseWriter, r *http.Request) {
 	result := c.service.Add(&data)
 	result.Send(w)
 
-}
-
-func (c *vehicle_controller) GetAll(w http.ResponseWriter, r *http.Request) {
-	result := c.service.GetAll()
-	result.Send(w)
 }

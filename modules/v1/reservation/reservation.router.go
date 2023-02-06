@@ -1,4 +1,4 @@
-package vehicle
+package reservation
 
 import (
 	"github.com/gorilla/mux"
@@ -7,13 +7,12 @@ import (
 )
 
 func NewRoute(rt *mux.Router, db *gorm.DB) {
-	route := rt.PathPrefix("/vehicle").Subrouter()
+	route := rt.PathPrefix("/reservation").Subrouter()
 
 	repo := NewRepo(db)
 	service := NewService(repo)
 	controller := NewController(service)
 
-	route.HandleFunc("/", middleware.Handle(controller.Add, middleware.AuthMiddleware("admin"))).Methods("POST")
-	route.HandleFunc("/", controller.GetAll).Methods("GET")
+	route.HandleFunc("/", middleware.Handle(controller.Add, middleware.AuthMiddleware("admin", "user"))).Methods("POST")
 
 }

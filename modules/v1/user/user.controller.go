@@ -22,7 +22,6 @@ func NewController(service interfaces.UserServiceIF) *user_controller {
 func (c *user_controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	result := c.service.GetAll()
 	result.Send(w)
-	return
 }
 
 func (c *user_controller) Add(w http.ResponseWriter, r *http.Request) {
@@ -31,6 +30,7 @@ func (c *user_controller) Add(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
 		lib.NewRes(err.Error(), 500, true).Send(w)
+		return
 	}
 
 	_, err = govalidator.ValidateStruct(data)
@@ -42,4 +42,9 @@ func (c *user_controller) Add(w http.ResponseWriter, r *http.Request) {
 	result := c.service.Add(&data)
 	result.Send(w)
 
+}
+
+func (c *user_controller) GetById(w http.ResponseWriter, r *http.Request) {
+	user_id := r.Context().Value("user")
+	c.service.GetById(user_id.(string)).Send(w)
 }
