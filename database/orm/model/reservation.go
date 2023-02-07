@@ -16,3 +16,7 @@ type Reservation struct {
 }
 
 type Reservations []Reservation
+
+// func (Reservation) TableName() string {
+// 	return "reservations"
+// }

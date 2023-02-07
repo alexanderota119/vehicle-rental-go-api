@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/rfauzi44/vehicle-rental/database/orm/model"
 	"github.com/rfauzi44/vehicle-rental/interfaces"
 	"github.com/rfauzi44/vehicle-rental/lib"
@@ -25,6 +26,12 @@ func (c *auth_controller) Login(w http.ResponseWriter, r *http.Request) {
 		lib.NewRes(err.Error(), 500, true)
 		return
 	}
+	_, err = govalidator.ValidateStruct(data)
+	if err != nil {
+		lib.NewRes(err.Error(), 500, true).Send(w)
+		return
+	}
+
 	c.service.Login(&data).Send(w)
 }
 
@@ -35,6 +42,12 @@ func (c *auth_controller) Register(w http.ResponseWriter, r *http.Request) {
 		lib.NewRes(err.Error(), 500, true)
 		return
 	}
+	_, err = govalidator.ValidateStruct(data)
+	if err != nil {
+		lib.NewRes(err.Error(), 500, true).Send(w)
+		return
+	}
+
 	c.service.Register(&data).Send(w)
 
 }
