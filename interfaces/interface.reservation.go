@@ -7,8 +7,14 @@ import (
 
 type ReservationRepoIF interface {
 	Add(data *model.Reservation) (*model.Reservation, error)
+	GetAll() (*model.Reservation, error)
+	Update(data *model.Reservation) (*model.Reservation, error)
+	Delete(uuid string) error
 }
 
 type ReservationServiceIF interface {
 	Add(data *model.Reservation) *lib.Response
+	GetAll() *lib.Response
+	Update(data *model.Reservation) *lib.Response
+	Delete(uuid string) *lib.Response
 }

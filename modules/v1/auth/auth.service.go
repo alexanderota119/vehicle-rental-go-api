@@ -19,6 +19,7 @@ func NewService(repo interfaces.UserRepoIF) *auth_service {
 }
 
 func (s *auth_service) Login(body *model.User) *lib.Response {
+
 	user, err := s.repo.FindEmail(body.Email)
 	if err != nil {
 		return lib.NewRes("Email not registered", 401, true)
@@ -38,6 +39,10 @@ func (s *auth_service) Login(body *model.User) *lib.Response {
 }
 
 func (s *auth_service) Register(body *model.User) *lib.Response {
+	_, err := s.repo.FindEmail(body.Email)
+	if err == nil {
+		return lib.NewRes("Email has been registered", 401, true)
+	}
 	hashPassword, err := lib.HashPassword(body.Password)
 	if err != nil {
 		return lib.NewRes(err.Error(), 400, true)

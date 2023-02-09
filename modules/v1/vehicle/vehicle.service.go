@@ -32,3 +32,30 @@ func (s *vehicle_service) GetAll() *lib.Response {
 	return lib.NewRes(data, 200, false)
 
 }
+
+func (s *vehicle_service) GetById(uuid string) *lib.Response {
+	data, err := s.repo.GetById(uuid)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+
+	return lib.NewRes(data, 200, false)
+}
+
+func (s *vehicle_service) Update(data *model.Vehicle) *lib.Response {
+	data, err := s.repo.Update(data)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+	return lib.NewRes(data, 200, false)
+
+}
+
+func (s *vehicle_service) Delete(uuid string) *lib.Response {
+	err := s.repo.Delete(uuid)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+	return lib.NewRes("sucess", 200, false)
+
+}

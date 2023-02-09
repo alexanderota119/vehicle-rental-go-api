@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/asaskevich/govalidator"
+	"github.com/gorilla/mux"
 	"github.com/rfauzi44/vehicle-rental/database/orm/model"
 	"github.com/rfauzi44/vehicle-rental/interfaces"
 	"github.com/rfauzi44/vehicle-rental/lib"
@@ -42,4 +43,43 @@ func (c *vehicle_controller) Add(w http.ResponseWriter, r *http.Request) {
 func (c *vehicle_controller) GetAll(w http.ResponseWriter, r *http.Request) {
 	result := c.service.GetAll()
 	result.Send(w)
+}
+
+func (c *vehicle_controller) GetById(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)["uuid"]
+	c.service.GetById(params).Send(w)
+}
+
+func (c *vehicle_controller) Update(w http.ResponseWriter, r *http.Request) {
+
+	var data model.Vehicle
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		lib.NewRes(err.Error(), 500, true).Send(w)
+		return
+	}
+
+	_, err = govalidator.ValidateStruct(data)
+	if err != nil {
+		lib.NewRes(err.Error(), 500, true).Send(w)
+		return
+	}
+
+	result := c.service.Update(&data)
+	result.Send(w)
+
+}
+
+func (c *vehicle_controller) Delete(w http.ResponseWriter, r *http.Request) {
+
+	var data model.Vehicle
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		lib.NewRes(err.Error(), 500, true).Send(w)
+		return
+	}
+
+	result := c.service.Delete(data.VehicleID)
+	result.Send(w)
+
 }

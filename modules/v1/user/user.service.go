@@ -46,3 +46,32 @@ func (s *user_service) GetById(uuid string) *lib.Response {
 
 	return lib.NewRes(data, 200, false)
 }
+
+func (s *user_service) Update(body *model.User) *lib.Response {
+
+	_, err := s.repo.FindEmail(body.Email)
+	if err == nil {
+		return lib.NewRes("Email has been registered", 401, true)
+	}
+	hashPassword, err := lib.HashPassword(body.Password)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+	body.Password = hashPassword
+
+	data, err := s.repo.Update(body)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+	return lib.NewRes(data, 200, false)
+
+}
+
+func (s *user_service) Delete(uuid string) *lib.Response {
+	err := s.repo.Delete(uuid)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+	return lib.NewRes("sucess", 200, false)
+
+}

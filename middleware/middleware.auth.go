@@ -17,7 +17,7 @@ func AuthMiddleware(role ...string) Middleware {
 
 			// get header optional
 			if header = r.Header.Get("Authorization"); header == "" {
-				lib.NewRes("header not provide, please login", 401, true).Send(w)
+				lib.NewRes("header not provided, please login", 401, true).Send(w)
 				return
 			}
 

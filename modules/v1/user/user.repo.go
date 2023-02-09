@@ -62,3 +62,25 @@ func (r *user_repo) GetById(uuid string) (*model.User, error) {
 
 	return &data, nil
 }
+
+func (r *user_repo) Update(data *model.User) (*model.User, error) {
+	err := r.database.Model(&model.User{}).Where("user_id = ?", data.UserID).Updates(data).Error
+
+	if err != nil {
+		return nil, err
+	}
+	data.Password = ""
+
+	return data, nil
+}
+
+func (r *user_repo) Delete(uuid string) error {
+	err := r.database.Where("user_id = ?", uuid).Delete(&model.User{}).Error
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}

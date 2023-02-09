@@ -21,14 +21,10 @@ func NewController(service interfaces.AuthServiceIF) *auth_controller {
 
 func (c *auth_controller) Login(w http.ResponseWriter, r *http.Request) {
 	var data model.User
+
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
 		lib.NewRes(err.Error(), 500, true)
-		return
-	}
-	_, err = govalidator.ValidateStruct(data)
-	if err != nil {
-		lib.NewRes(err.Error(), 500, true).Send(w)
 		return
 	}
 

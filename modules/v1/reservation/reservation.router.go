@@ -13,6 +13,10 @@ func NewRoute(rt *mux.Router, db *gorm.DB) {
 	service := NewService(repo)
 	controller := NewController(service)
 
-	route.HandleFunc("/", middleware.Handle(controller.Add, middleware.AuthMiddleware("admin", "user"))).Methods("POST")
+	route.HandleFunc("/", middleware.Handle(controller.Add, middleware.AuthMiddleware("user"))).Methods("POST")
+
+	route.HandleFunc("/all", middleware.Handle(controller.GetAll, middleware.AuthMiddleware("admin"))).Methods("GET")
+	route.HandleFunc("/", middleware.Handle(controller.Update, middleware.AuthMiddleware("admin", "user"))).Methods("PUT")
+	route.HandleFunc("/", middleware.Handle(controller.Delete, middleware.AuthMiddleware("admin"))).Methods("DELETE")
 
 }

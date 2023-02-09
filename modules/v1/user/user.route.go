@@ -15,5 +15,7 @@ func NewRoute(rt *mux.Router, db *gorm.DB) {
 
 	route.HandleFunc("/", middleware.Handle(controller.GetById, middleware.AuthMiddleware("user"))).Methods("GET")
 	route.HandleFunc("/all", middleware.Handle(controller.GetAll, middleware.AuthMiddleware("admin"))).Methods("GET")
+	route.HandleFunc("/", middleware.Handle(controller.Update, middleware.AuthMiddleware("user"))).Methods("PUT")
+	route.HandleFunc("/", middleware.Handle(controller.Delete, middleware.AuthMiddleware("admin"))).Methods("DELETE")
 
 }
