@@ -52,12 +52,12 @@ func (r *user_repo) FindEmail(email string) (*model.User, error) {
 func (r *user_repo) GetById(uuid string) (*model.User, error) {
 
 	var data model.User
-	var field = []string{"user_id", "email"}
 
-	result := r.database.Select(field).First(&data, "user_id = ?", uuid)
+	result := r.database.First(&data, "user_id = ?", uuid)
+	data.Password = ""
 
 	if result.Error != nil {
-		return nil, errors.New("fail")
+		return nil, errors.New("cant get data")
 	}
 
 	return &data, nil
