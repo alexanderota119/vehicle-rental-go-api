@@ -3,9 +3,11 @@ package vehicle
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/asaskevich/govalidator"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/schema"
 	"github.com/rfauzi44/vehicle-rental/database/orm/model"
 	"github.com/rfauzi44/vehicle-rental/interfaces"
 	"github.com/rfauzi44/vehicle-rental/lib"
@@ -23,9 +25,15 @@ func NewController(service interfaces.VahicleServiceIF) *vehicle_controller {
 func (c *vehicle_controller) Add(w http.ResponseWriter, r *http.Request) {
 
 	var data model.Vehicle
-	err := json.NewDecoder(r.Body).Decode(&data)
+
+	image := r.Context().Value("image").(string)
+	data.Image = image
+
+	err := schema.NewDecoder().Decode(&data, r.MultipartForm.Value)
+
 	if err != nil {
-		lib.NewRes(err.Error(), 500, true).Send(w)
+		_ = os.Remove(image)
+		lib.NewRes(err.Error(), 400, true).Send(w)
 		return
 	}
 
@@ -53,9 +61,15 @@ func (c *vehicle_controller) GetById(w http.ResponseWriter, r *http.Request) {
 func (c *vehicle_controller) Update(w http.ResponseWriter, r *http.Request) {
 
 	var data model.Vehicle
-	err := json.NewDecoder(r.Body).Decode(&data)
+
+	image := r.Context().Value("image").(string)
+	data.Image = image
+
+	err := schema.NewDecoder().Decode(&data, r.MultipartForm.Value)
+
 	if err != nil {
-		lib.NewRes(err.Error(), 500, true).Send(w)
+		_ = os.Remove(image)
+		lib.NewRes(err.Error(), 400, true).Send(w)
 		return
 	}
 

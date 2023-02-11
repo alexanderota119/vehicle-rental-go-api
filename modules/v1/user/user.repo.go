@@ -74,13 +74,14 @@ func (r *user_repo) Update(data *model.User) (*model.User, error) {
 	return data, nil
 }
 
-func (r *user_repo) Delete(uuid string) error {
-	err := r.database.Where("user_id = ?", uuid).Delete(&model.User{}).Error
+func (r *user_repo) Delete(uuid string) (*model.User, error) {
+	var data model.User
+	result := r.database.Where("user_id = ?", uuid).Delete(&data)
 
-	if err != nil {
-		return err
+	if result.Error != nil {
+		return nil, result.Error
 	}
 
-	return nil
+	return &data, nil
 
 }

@@ -61,13 +61,14 @@ func (r *reservation_repo) Update(data *model.Reservation) (*model.Reservation, 
 	return data, nil
 }
 
-func (r *reservation_repo) Delete(uuid string) error {
-	err := r.database.Where("reservation_id = ?", uuid).Delete(&model.Reservation{}).Error
+func (r *reservation_repo) Delete(uuid string) (*model.Reservation, error) {
+	var data model.Reservation
+	result := r.database.Where("reservation_id = ?", uuid).Delete(&data)
 
-	if err != nil {
-		return err
+	if result.Error != nil {
+		return nil, result.Error
 	}
 
-	return nil
+	return &data, nil
 
 }

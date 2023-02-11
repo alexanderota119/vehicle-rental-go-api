@@ -52,10 +52,11 @@ func (s *vehicle_service) Update(data *model.Vehicle) *lib.Response {
 }
 
 func (s *vehicle_service) Delete(uuid string) *lib.Response {
-	err := s.repo.Delete(uuid)
+	data, err := s.repo.Delete(uuid)
+
 	if err != nil {
 		return lib.NewRes(err.Error(), 400, true)
 	}
-	return lib.NewRes("sucess", 200, false)
+	return lib.NewRes(data, 200, false)
 
 }

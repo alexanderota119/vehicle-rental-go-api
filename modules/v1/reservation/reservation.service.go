@@ -49,10 +49,10 @@ func (s *reservation_service) Update(data *model.Reservation) *lib.Response {
 }
 
 func (s *reservation_service) Delete(uuid string) *lib.Response {
-	err := s.repo.Delete(uuid)
+	data, err := s.repo.Delete(uuid)
 	if err != nil {
 		return lib.NewRes(err.Error(), 400, true)
 	}
-	return lib.NewRes("success", 200, false)
+	return lib.NewRes(data, 200, false)
 
 }

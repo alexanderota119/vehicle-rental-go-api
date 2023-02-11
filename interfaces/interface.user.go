@@ -11,7 +11,7 @@ type UserRepoIF interface {
 	FindEmail(email string) (*model.User, error)
 	GetById(uuid string) (*model.User, error)
 	Update(data *model.User) (*model.User, error)
-	Delete(uuid string) error
+	Delete(uuid string) (*model.User, error)
 }
 
 type UserServiceIF interface {

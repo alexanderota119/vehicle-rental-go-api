@@ -10,7 +10,7 @@ type VehicleRepoIF interface {
 	GetAll() (*model.Vehicles, error)
 	GetById(uuid string) (*model.Vehicle, error)
 	Update(data *model.Vehicle) (*model.Vehicle, error)
-	Delete(uuid string) error
+	Delete(uuid string) (*model.Vehicle, error)
 }
 
 type VahicleServiceIF interface {

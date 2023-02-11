@@ -1,6 +1,9 @@
 package vehicle
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/rfauzi44/vehicle-rental/database/orm/model"
 	"gorm.io/gorm"
 )
@@ -16,6 +19,8 @@ func NewRepo(db *gorm.DB) *vehicle_repo {
 
 func (r *vehicle_repo) Add(data *model.Vehicle) (*model.Vehicle, error) {
 	err := r.database.Create(data).Error
+
+	data.Image = fmt.Sprintf("%s%s%s", os.Getenv("BASE_URL"), "/public/image", data.Image)
 	if err != nil {
 		return nil, err
 	}
@@ -48,6 +53,7 @@ func (r *vehicle_repo) GetById(uuid string) (*model.Vehicle, error) {
 
 func (r *vehicle_repo) Update(data *model.Vehicle) (*model.Vehicle, error) {
 	err := r.database.Model(&model.Vehicle{}).Where("vehicle_id = ?", data.VehicleID).Updates(data).Error
+	data.Image = fmt.Sprintf("%s%s%s", os.Getenv("BASE_URL"), "/public/image", data.Image)
 
 	if err != nil {
 		return nil, err
@@ -56,13 +62,15 @@ func (r *vehicle_repo) Update(data *model.Vehicle) (*model.Vehicle, error) {
 	return data, nil
 }
 
-func (r *vehicle_repo) Delete(uuid string) error {
-	err := r.database.Where("vehicle_id = ?", uuid).Delete(&model.Vehicle{}).Error
+func (r *vehicle_repo) Delete(uuid string) (*model.Vehicle, error) {
 
-	if err != nil {
-		return err
+	var data model.Vehicle
+	result := r.database.Where("vehicle_id = ?", uuid).Delete(&data)
+
+	if result.Error != nil {
+		return nil, result.Error
 	}
 
-	return nil
+	return &data, nil
 
 }

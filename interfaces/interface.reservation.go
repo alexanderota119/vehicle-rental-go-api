@@ -9,7 +9,7 @@ type ReservationRepoIF interface {
 	Add(data *model.Reservation) (*model.Reservation, error)
 	GetAll() (*model.Reservation, error)
 	Update(data *model.Reservation) (*model.Reservation, error)
-	Delete(uuid string) error
+	Delete(uuid string) (*model.Reservation, error)
 }
 
 type ReservationServiceIF interface {

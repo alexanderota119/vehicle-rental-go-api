@@ -16,6 +16,7 @@ type Reservation struct {
 	IsPaid        bool      `gorm:"type:bool default:false" json:"is_paid,omitempty" valid:"-"`
 	CreatedAt     time.Time `json:"created_at" valid:"-"`
 	UpdatedAt     time.Time `json:"updated_at,omitempty" valid:"-" `
+	VehicleDetail Vehicle   `gorm:"foreignKey:VehicleID;references:VehicleID" json:"vehicle_detail,omitempty" valid:"-"`
 }
 
 type Reservations []Reservation
