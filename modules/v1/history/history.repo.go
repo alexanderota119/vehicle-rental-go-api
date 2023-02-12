@@ -16,7 +16,7 @@ func NewRepo(db *gorm.DB) *history_repo {
 
 func (r *history_repo) GetById(uuid string) (*model.Reservations, error) {
 	var data model.Reservations
-	err := r.database.Preload("VehicleDetail").Where("user_id = ?", uuid).Find(&data).Error
+	err := r.database.Preload("VehicleDetail").Where("f_user_id = ?", uuid).Find(&data).Error
 	if err != nil {
 		return nil, err
 	}

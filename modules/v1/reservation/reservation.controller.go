@@ -24,7 +24,7 @@ func (c *reservation_controller) Add(w http.ResponseWriter, r *http.Request) {
 	var data model.Reservation
 
 	UserID := r.Context().Value("user")
-	data.UserID = (UserID.(string))
+	data.FUserID = (UserID.(string))
 
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
