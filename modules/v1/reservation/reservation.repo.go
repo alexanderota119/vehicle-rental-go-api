@@ -17,14 +17,14 @@ func NewRepo(db *gorm.DB) *reservation_repo {
 func (r *reservation_repo) Add(data *model.Reservation) (*model.Reservation, error) {
 	var vehicle model.Vehicle
 
-	err := r.database.Where("vehicle_id = ?", data.VehicleID).First(&vehicle).Error
+	err := r.database.Where("vehicle_id = ?", data.FVehicleID).First(&vehicle).Error
 	if err != nil {
 		return nil, err
 	}
 
 	data.Total = data.Duration * data.Quantity * vehicle.Price
 
-	err = r.database.Create(data).Error
+	err = r.database.Create(&data).Preload("VehicleDetail").Error
 	if err != nil {
 		return nil, err
 	}
@@ -32,9 +32,9 @@ func (r *reservation_repo) Add(data *model.Reservation) (*model.Reservation, err
 	return data, nil
 }
 
-func (r *reservation_repo) GetAll() (*model.Reservation, error) {
-	var data model.Reservation
-	err := r.database.Find(&data).Error
+func (r *reservation_repo) GetAll() (*model.Reservations, error) {
+	var data model.Reservations
+	err := r.database.Preload("VehicleDetail").Find(&data).Error
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (r *reservation_repo) GetAll() (*model.Reservation, error) {
 func (r *reservation_repo) Update(data *model.Reservation) (*model.Reservation, error) {
 	var vehicle model.Vehicle
 
-	err := r.database.Where("vehicle_id = ?", data.VehicleID).First(&vehicle).Error
+	err := r.database.Where("vehicle_id = ?", data.FVehicleID).First(&vehicle).Error
 	if err != nil {
 		return nil, err
 	}
