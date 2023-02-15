@@ -1,13 +1,13 @@
 services:
   database:
-    image: postgres:15-alpine
+    image: postgres:15.1
     restart: always
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_PASSWORD: fazztrack
-      POSTGRES_USER: postgres
-      POSTGRES_DB: vehicle-rental
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
 
     volumes:
       - ./database/postgres/docker-entrypoint-initdb:/docker-entrypoint-initdb.d/
