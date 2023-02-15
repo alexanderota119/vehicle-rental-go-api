@@ -9,8 +9,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: vehicle-rental
 
-    # volumes:
-    #   - ./database/postgres/docker-entrypoint-initdb:/docker-entrypoint-initdb.d/
+    volumes:
+      - ./database/postgres/docker-entrypoint-initdb:/docker-entrypoint-initdb.d/
     networks:
       - vehicle-rental-networks
 
@@ -19,6 +19,7 @@ services:
     image: rfauzi/vehicle-rental
     depends_on:
       - database
+    restart: always
     ports:
       - "3001:3000"
     env_file:
