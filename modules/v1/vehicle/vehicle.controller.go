@@ -97,3 +97,8 @@ func (c *vehicle_controller) Delete(w http.ResponseWriter, r *http.Request) {
 	result.Send(w)
 
 }
+
+func (c *vehicle_controller) GetByCategory(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)["category"]
+	c.service.GetByCategory(params).Send(w)
+}

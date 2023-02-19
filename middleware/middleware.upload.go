@@ -38,7 +38,7 @@ func AuthUploadImage() Middleware {
 			}
 
 			filetype := http.DetectContentType(buff)
-			if filetype != "image/jpeg" && filetype != "image/png" && filetype != "image/jpg" {
+			if filetype != "image/jpeg" && filetype != "image/png" && filetype != "image/jpg" && filetype != "image/webp" {
 				lib.NewRes("file format is not allowed. Please upload a JPEG, JPG or PNG image", 401, true).Send(w)
 				return
 			}

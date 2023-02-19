@@ -11,6 +11,7 @@ type VehicleRepoIF interface {
 	GetById(uuid string) (*model.Vehicle, error)
 	Update(data *model.Vehicle) (*model.Vehicle, error)
 	Delete(uuid string) (*model.Vehicle, error)
+	GetByCategory(category string) (*model.Vehicles, error)
 }
 
 type VahicleServiceIF interface {
@@ -19,4 +20,5 @@ type VahicleServiceIF interface {
 	GetById(uuid string) *lib.Response
 	Update(data *model.Vehicle) *lib.Response
 	Delete(uuid string) *lib.Response
+	GetByCategory(category string) *lib.Response
 }

@@ -60,3 +60,12 @@ func (s *vehicle_service) Delete(uuid string) *lib.Response {
 	return lib.NewRes(data, 200, false)
 
 }
+
+func (s *vehicle_service) GetByCategory(category string) *lib.Response {
+	data, err := s.repo.GetByCategory(category)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+
+	return lib.NewRes(data, 200, false)
+}
