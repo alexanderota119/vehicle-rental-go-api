@@ -12,6 +12,8 @@ type Vehicle struct {
 	Description string    `json:"description,omitempty" valid:"-"`
 	Category    string    `json:"category" valid:"type(string)"`
 	Image       string    `json:"image,omitempty" valid:"-"`
+	Count       int       `gorm:"default:0" json:"count,omitempty" valid:"-"`
+	Slug        string    `json:"slug,omitempty" valid:"-"`
 	CreatedAt   time.Time `json:"created_at" valid:"-"`
 	UpdatedAt   time.Time `json:"updated_at,omitempty" valid:"-"`
 }

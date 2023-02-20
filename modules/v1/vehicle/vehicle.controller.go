@@ -102,3 +102,15 @@ func (c *vehicle_controller) GetByCategory(w http.ResponseWriter, r *http.Reques
 	params := mux.Vars(r)["category"]
 	c.service.GetByCategory(params).Send(w)
 }
+
+func (c *vehicle_controller) Sort(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query()
+	by := query["by"][0]
+	order := query["order"][0]
+	c.service.Sort(by, order).Send(w)
+}
+
+func (c *vehicle_controller) GetBySlug(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)["slug"]
+	c.service.GetBySlug(params).Send(w)
+}

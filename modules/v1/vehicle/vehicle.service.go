@@ -69,3 +69,21 @@ func (s *vehicle_service) GetByCategory(category string) *lib.Response {
 
 	return lib.NewRes(data, 200, false)
 }
+
+func (s *vehicle_service) Sort(by string, order string) *lib.Response {
+	data, err := s.repo.Sort(by, order)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+
+	return lib.NewRes(data, 200, false)
+}
+
+func (s *vehicle_service) GetBySlug(slug string) *lib.Response {
+	data, err := s.repo.GetBySlug(slug)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+
+	return lib.NewRes(data, 200, false)
+}

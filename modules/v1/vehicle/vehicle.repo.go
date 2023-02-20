@@ -18,6 +18,7 @@ func NewRepo(db *gorm.DB) *vehicle_repo {
 }
 
 func (r *vehicle_repo) Add(data *model.Vehicle) (*model.Vehicle, error) {
+	data.Slug = lib.Slug(data.Name)
 	err := r.database.Create(data).Error
 
 	if err != nil {
@@ -31,7 +32,7 @@ func (r *vehicle_repo) Add(data *model.Vehicle) (*model.Vehicle, error) {
 
 func (r *vehicle_repo) GetAll() (*model.Vehicles, error) {
 	var data model.Vehicles
-	err := r.database.Order("name desc").Find(&data).Error
+	err := r.database.Find(&data).Error
 	if err != nil {
 		return nil, err
 	}
@@ -83,8 +84,6 @@ func (r *vehicle_repo) Delete(uuid string) (*model.Vehicle, error) {
 func (r *vehicle_repo) GetByCategory(category string) (*model.Vehicles, error) {
 	var data model.Vehicles
 
-	fmt.Println(category)
-
 	err := r.database.Where("category = ?", category).Find(&data).Error
 	if err != nil {
 		return nil, err
@@ -93,6 +92,34 @@ func (r *vehicle_repo) GetByCategory(category string) (*model.Vehicles, error) {
 	for i := 0; i < len(data); i++ {
 		data[i].Image = lib.ImageReturn(data[i].Image)
 	}
+
+	return &data, nil
+}
+
+func (r *vehicle_repo) Sort(by string, order string) (*model.Vehicles, error) {
+	var data model.Vehicles
+
+	orderQuery := fmt.Sprintf("%s %s", by, order)
+	err := r.database.Order(orderQuery).Limit(8).Find(&data).Error
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(data); i++ {
+		data[i].Image = lib.ImageReturn(data[i].Image)
+	}
+
+	return &data, nil
+}
+
+func (r *vehicle_repo) GetBySlug(slug string) (*model.Vehicle, error) {
+	var data model.Vehicle
+
+	err := r.database.First(&data, "slug = ?", slug).Error
+	if err != nil {
+		return nil, err
+	}
+	data.Image = lib.ImageReturn(data.Image)
 
 	return &data, nil
 }

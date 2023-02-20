@@ -2,6 +2,8 @@ package model
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Reservation struct {
@@ -20,3 +22,18 @@ type Reservation struct {
 }
 
 type Reservations []Reservation
+
+// Add the hook to the Reservation model
+func (reservation *Reservation) TableName() string {
+	return "reservations"
+}
+
+func (reservation *Reservation) AfterCreate(tx *gorm.DB) (err error) {
+	// Increment the count in the vehicle table for the corresponding FVehicleID
+	if err := tx.Model(&Vehicle{}).
+		Where("vehicle_id = ?", reservation.FVehicleID).
+		UpdateColumn("count", gorm.Expr("count + ?", 1)).Error; err != nil {
+		return err
+	}
+	return
+}
