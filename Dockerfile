@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . .
 
 RUN go mod tidy
-RUN go build -v -o /app/vehicle-rental
+RUN go build -v -o /app/vehicle-rental-backend
 
 EXPOSE 3000
 ENTRYPOINT [ "/app/vehicle-rental"]
