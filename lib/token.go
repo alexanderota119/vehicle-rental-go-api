@@ -12,16 +12,15 @@ var Secret = []byte(os.Getenv("JWT_KEY"))
 type claims struct {
 	UserID string
 	Role   string
-	jwt.RegisteredClaims
+	jwt.StandardClaims
 }
 
 func NewToken(uuid string, role string) *claims {
-	expires := time.Now().Add(time.Hour * 72)
 	return &claims{
 		UserID: uuid,
 		Role:   role,
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(expires),
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
 		},
 	}
 }

@@ -25,10 +25,11 @@ func (s *auth_service) Login(body *model.User) *lib.Response {
 		return lib.NewRes("Email not registered", 401, true)
 	}
 
-	if lib.CheckPassword(body.Password, user.Password) {
+	if lib.CheckPassword(user.Password, body.Password) {
 		return lib.NewRes("Wrong password", 401, true)
 
 	}
+
 	jwt := lib.NewToken(user.UserID, user.Role)
 	token, err := jwt.CreateToken()
 	if err != nil {

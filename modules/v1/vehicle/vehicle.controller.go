@@ -114,3 +114,13 @@ func (c *vehicle_controller) GetBySlug(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)["slug"]
 	c.service.GetBySlug(params).Send(w)
 }
+
+func (c *vehicle_controller) Search(w http.ResponseWriter, r *http.Request) {
+
+	query := r.URL.Query()
+
+	s := query["s"][0]
+
+	c.service.Search(s).Send(w)
+
+}

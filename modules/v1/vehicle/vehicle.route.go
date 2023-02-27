@@ -21,5 +21,6 @@ func NewRoute(rt *mux.Router, db *gorm.DB) {
 	route.HandleFunc("/category/{category}", controller.GetByCategory).Methods("GET")
 	route.HandleFunc("/sort", controller.Sort).Methods("GET")
 	route.HandleFunc("/slug/{slug}", controller.GetBySlug).Methods("GET")
+	route.HandleFunc("/search", controller.Search).Methods("GET")
 
 }

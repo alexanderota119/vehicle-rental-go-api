@@ -87,3 +87,14 @@ func (s *vehicle_service) GetBySlug(slug string) *lib.Response {
 
 	return lib.NewRes(data, 200, false)
 }
+
+func (s *vehicle_service) Search(query string) *lib.Response {
+
+	data, err := s.repo.Search(query)
+	if err != nil {
+		return lib.NewRes(err.Error(), 400, true)
+	}
+
+	return lib.NewRes(data, 200, false)
+
+}

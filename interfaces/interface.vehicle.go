@@ -14,6 +14,7 @@ type VehicleRepoIF interface {
 	GetByCategory(category string) (*model.Vehicles, error)
 	Sort(by string, order string) (*model.Vehicles, error)
 	GetBySlug(slug string) (*model.Vehicle, error)
+	Search(query string) (*model.Vehicles, error)
 }
 
 type VahicleServiceIF interface {
@@ -25,4 +26,5 @@ type VahicleServiceIF interface {
 	GetByCategory(category string) *lib.Response
 	Sort(by string, order string) *lib.Response
 	GetBySlug(slug string) *lib.Response
+	Search(query string) *lib.Response
 }

@@ -1,6 +1,7 @@
 package vehicle
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/rfauzi44/vehicle-rental/database/orm/model"
@@ -122,4 +123,22 @@ func (r *vehicle_repo) GetBySlug(slug string) (*model.Vehicle, error) {
 	data.Image = lib.ImageReturn(data.Image)
 
 	return &data, nil
+}
+
+func (r *vehicle_repo) Search(query string) (*model.Vehicles, error) {
+
+	var data model.Vehicles
+
+	err := r.database.Where("LOWER(name) LIKE ? OR LOWER(description) LIKE ? OR LOWER(location) LIKE ? OR LOWER(category) LIKE ?", "%"+query+"%", "%"+query+"%", "%"+query+"%", "%"+query+"%").Find(&data).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	if len(data) == 0 {
+		return nil, errors.New("vehicle not found")
+	}
+
+	return &data, nil
+
 }
