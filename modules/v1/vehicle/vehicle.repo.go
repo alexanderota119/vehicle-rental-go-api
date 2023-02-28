@@ -139,6 +139,10 @@ func (r *vehicle_repo) Search(query string) (*model.Vehicles, error) {
 		return nil, errors.New("vehicle not found")
 	}
 
+	for i := 0; i < len(data); i++ {
+		data[i].Image = lib.ImageReturn(data[i].Image)
+	}
+
 	return &data, nil
 
 }
