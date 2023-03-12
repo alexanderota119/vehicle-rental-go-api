@@ -28,9 +28,9 @@ Vehicle Rental is a two-sided marketplace app for renting vehicles. The primary 
 
 ## 💻 Built with
 
-- [Gorilla MUX](https://github.com/gorilla/mux): for handling HTTP requests and responses
-- [GORM](https://github.com/go-gorm/gorm): for ORM library
-- [JWT](https://github.com/golang-jwt/jwt): for authentication and authorization
-- [Postgres](https://github.com/postgres/postgres): for DBMS
-- [Sendinblue](https://github.com/sendinblue/APIv3-go-library): for sending emails
-- [Docker](https://github.com/docker): for deployment
+- [Gorilla MUX](https://github.com/gorilla/mux) for handling HTTP requests and responses
+- [GORM](https://github.com/go-gorm/gorm) for ORM library
+- [JWT](https://github.com/golang-jwt/jwt) for authentication and authorization
+- [Postgres](https://github.com/postgres/postgres) for DBMS
+- [Sendinblue](https://github.com/sendinblue/APIv3-go-library) for sending emails
+- [Docker](https://github.com/docker) for deployment
