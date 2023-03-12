@@ -4,7 +4,7 @@ Vehicle Rental is a two-sided marketplace app for renting vehicles. Its primary 
 
 ## 🔥 Showcase
 
-- [Web Client with ReactJS](https://github.com/rfauzi44/vehicle-rental-web)
+- [Web Client Repository](https://github.com/rfauzi44/vehicle-rental-web)
 - Web Screenshot
 <p float="left">
 <img src="app1.png" alt="Alt text" height="500">
