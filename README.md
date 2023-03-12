@@ -1,6 +1,6 @@
 # Vehicle Rental
 
-Vehicle Rental is a two-sided marketplace app for renting vehicles. Its primary feature is that consumers can rent vehicles while renters can offer their vehicles for rent. This Restful API was built using Golang and SQL, GORM for ORM and dependency injection as the chosen modularization strategy.
+Vehicle Rental is a two-sided marketplace app for renting vehicles. The primary feature is consumers can rent vehicles while renters can offer their vehicles for rent. This Restful API was built using Golang and SQL, GORM for ORM and dependency injection as the chosen modularization strategy. Finally deploy it with Docker.
 
 ## 🔥 Showcase
 
@@ -33,3 +33,4 @@ Vehicle Rental is a two-sided marketplace app for renting vehicles. Its primary 
 - [JWT](https://github.com/golang-jwt/jwt): for authentication and authorization
 - [Postgres](https://github.com/postgres/postgres): for DBMS
 - [Sendinblue](https://github.com/sendinblue/APIv3-go-library): for sending emails
+- [Docker](https://github.com/docker): for deployment
