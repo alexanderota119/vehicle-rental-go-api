@@ -11,10 +11,6 @@ Vehicle Rental is a two-sided marketplace app for renting vehicles. The primary 
 <img src="app2.png" alt="Alt text" height="500">
 </p>
 
-- Database Schema
-
-<img src="db-vehicle-rental.png" alt="Alt text" height="250">
-
 - [Docker Image](https://hub.docker.com/r/rfauzi/vehicle-rental-api)
 - [Postman Docs](https://documenter.getpostman.com/view/25042327/2s93JtQPPz)
 
