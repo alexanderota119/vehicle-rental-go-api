@@ -101,7 +101,7 @@ func (r *vehicle_repo) Sort(by string, order string) (*model.Vehicles, error) {
 	var data model.Vehicles
 
 	orderQuery := fmt.Sprintf("%s %s", by, order)
-	err := r.database.Order(orderQuery).Limit(8).Find(&data).Error
+	err := r.database.Order(orderQuery).Find(&data).Error
 	if err != nil {
 		return nil, err
 	}
