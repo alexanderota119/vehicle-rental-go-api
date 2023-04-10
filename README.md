@@ -17,7 +17,6 @@ Vehicle Rental is two-sided marketplace app for renting vehicles. This Restful A
 ## ⚡ Feature
 
 - CRUD for all modules
-- GORM Query
 - Authentication and Authorization
 - Sorting, Filtering, Searching
 - Database Migration
